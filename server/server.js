@@ -15,10 +15,10 @@ const app = new Koa()
 app.keys=['abcdefg123'];//签名
 app.use(gzip());
 app.use(bodyParser());//解析Json或者form
-app.use(cors({credentials:false}));//跨域
-app.use(setUser);//设置用户
+//app.use(cors({credentials:false}));//跨域
+//app.use(setUser);//设置用户
 //接口
-app.use(graphql.routes()).use(graphql.allowedMethods());
+//app.use(graphql.routes()).use(graphql.allowedMethods());
 
 const router = new Router();
 router.get('/', render);
@@ -42,8 +42,8 @@ function getIPAdress(){
 }
 
 Loadable.preloadAll().then(() => {
-  app.listen(8181, () => {
-    console.log(`http://${getIPAdress()}:8181`);
+  app.listen(8019, () => {
+    console.log(`http://${getIPAdress()}:8019`);
     console.log('服务启动');
   });
 });

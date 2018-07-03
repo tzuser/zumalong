@@ -57,7 +57,7 @@ const config={
     inline:true,
     hot:true,
     open : true,
-    port: 5200,
+    port: 5019,
     historyApiFallback:true,
     
     proxy:[{
