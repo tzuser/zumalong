@@ -62,13 +62,13 @@ const config={
     
     proxy:[{
        context: ['/graphql'],
-       target: 'http://localhost:8181',
+       target: 'http://localhost:8019',
        changeOrigin: true,
        secure: false
     },
     {
        context: ['**/*.jpg','**/*.png','**/*.gif','**/*.mp4'],
-       target: 'http://localhost:8181',
+       target: 'http://localhost:8019',
        changeOrigin: true,
        secure: false
     }],
