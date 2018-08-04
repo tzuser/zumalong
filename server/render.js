@@ -43,7 +43,6 @@ const prepHTML=(data,{html,head,style,body,script,styleTags,state,apollo_state})
 
 
 const render=async (ctx,next)=>{
-
 		const client = new ApolloClient({
 			ssrMode: true,
 		  link: new HttpLink({uri:'http://localhost:8181/graphql'}),
@@ -96,7 +95,7 @@ const render=async (ctx,next)=>{
 		let styleTagStr=styles.map(style => {
 								//cssStr=fs.readFileSync(path.join('../build',`/dist/${style.file}`),'utf8');
 								//console.log(cssStr);
-			        	return `<link href="/dist/${style.file}" rel="stylesheet"/>`
+			        	return `<link href="/${style.file}" rel="stylesheet"/>`
 			      	}).join('\n')
 
 		let scriptTagStr=scripts.map(bundle => {

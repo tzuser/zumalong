@@ -7,7 +7,9 @@ import * as ConfigAct from 'act_/config';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {filteringJitter} from 'tools_';
-
+import Footer from '@/Components/Footer';
+import styled,{ThemeProvider} from 'styled-components';
+import theme from '../public/theme'
 //去抖动
 const instanceFillteringJitter=filteringJitter();
 
@@ -21,7 +23,9 @@ const LoadableQrcode = Loadable({
   loading:PageLoading
 });
 
-
+const AppContainer=styled.div`
+  color:${p=>p.theme['color-text-base']};
+`
 
 const mapStateToProps=(state)=>({
   width:state.config.width
@@ -64,12 +68,15 @@ class App extends React.Component{
   }
 	render(){
 		return(
-			<div>
-        <Switch>
-          <Route exact path="/" component={LoadableHome}/>
-          <Route exact path="/qrcode/:id" component={LoadableQrcode}/>
-        </Switch>
-			</div>
+      <ThemeProvider theme={theme}>
+  			<AppContainer>
+          <Switch>
+            <Route exact path="/" component={LoadableHome}/>
+            <Route exact path="/qrcode/:id" component={LoadableQrcode}/>
+          </Switch>
+          <Footer />
+  			</AppContainer>
+      </ThemeProvider>
 			)
 	}
 };

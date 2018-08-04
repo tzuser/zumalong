@@ -1,4 +1,4 @@
-import mongoose,{Schema} from 'mongoose';
+import mongoose,{Schema} from 'mongoose';//127.0.0.1
 let db=mongoose.connect('mongodb://web:wysj3910@127.0.0.1:27017/web')
 //用户
 const userSchema=new Schema({
@@ -9,6 +9,8 @@ const userSchema=new Schema({
   creationDate:Date,
   sex:Number,
   avatar:String,
+  followingCount:{ type: Number, default: 0 },
+  followersCount:{ type: Number, default: 0 },
   //posts:[{ type: Schema.Types.ObjectId, ref: 'Post' }],
   roles:[String],
 })
@@ -59,11 +61,18 @@ const likeSchema=new Schema({
 const keywordSchema=new Schema({
   name:{type:String,index:true},//搜索关键字
   pinyin:{type:String,index:true},
-  count:Number//搜索次数
+  count:{ type: Number, default: 1 }//搜索次数
 })
 
-export const userModel=mongoose.model('User',userSchema)
-export const postModel=mongoose.model('Post',postSchema)
-export const likeModel=mongoose.model('Like',likeSchema)
-export const commentModel=mongoose.model('Comment',commentSchema)
-export const keywordModel=mongoose.model('Keyword',keywordSchema)
+//关注
+const followSchema=new Schema({
+  user:{type:Schema.Types.ObjectId,ref:'User'},//用户
+  follow:{type:Schema.Types.ObjectId,ref:'User'},//关注用户
+})
+
+export const userModel    = mongoose.model('User',userSchema)
+export const postModel    = mongoose.model('Post',postSchema)
+export const likeModel    = mongoose.model('Like',likeSchema)
+export const commentModel = mongoose.model('Comment',commentSchema)
+export const keywordModel = mongoose.model('Keyword',keywordSchema)
+export const followModel  = mongoose.model('Follow',followSchema)

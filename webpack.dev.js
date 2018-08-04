@@ -4,6 +4,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');//html生成
 const {ReactLoadablePlugin}=require('react-loadable/webpack');
 const configBase = require('./webpack.base.js');
 const merge=require('webpack-merge');
+const theme = require('./src/public/theme');
 //获取本机ip
 function getIPAdress(){  
   //return '192.168.56.1'
@@ -47,6 +48,15 @@ const config={
           }
          ]
        },
+       {
+           test: /\.less$/,
+           include: /node_modules/,
+           use: [
+               'style-loader',
+               'css-loader',
+               {loader: 'less-loader', options: {modifyVars: theme, javascriptEnabled: true}},
+           ],
+       }
     ]
   },
   devtool: 'eval-source-map',
@@ -62,12 +72,6 @@ const config={
     
     proxy:[{
        context: ['/graphql'],
-       target: 'http://localhost:8019',
-       changeOrigin: true,
-       secure: false
-    },
-    {
-       context: ['**/*.jpg','**/*.png','**/*.gif','**/*.mp4'],
        target: 'http://localhost:8019',
        changeOrigin: true,
        secure: false

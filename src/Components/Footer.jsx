@@ -1,131 +1,94 @@
 import React,{Component} from 'react';
-import {Box,Text,Column,Icon} from 'gestalt';
-import {Link,withRouter} from 'react-router-dom';
+import {withRouter,Link} from 'react-router-dom';
+import classNames from 'classnames'
 import styled from 'styled-components';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as configActs from '../actions/config';
-import ClassNames from 'classnames'
-const Foot=styled.div`
-left: 0;
-bottom: 0;
-right: 0;
-position: fixed;
-height: 54px;
-z-index: 1;
-background-color: rgba(255, 255, 255, 0.9);
-box-sizing: border-box;
-text-align: center;
-    overflow: hidden;
+import { withTheme } from 'styled-components'
+import { TabBar } from 'antd-mobile';
+
+const FooterBox=styled.div`
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:2;
+  background:#000;
 `
-const IconLink=styled(Link)`
-  margin:auto;
-  display: inline-block;
-  outline: 0px;
-  transition: transform 0.2s ease-out;
-  &.active svg{
-    color:#555;
+@withTheme
+@withRouter
+class Footer extends Component{
+  state={active:null}
+  data=[
+  {title:'首页',icon:'icon-home',path:'/'},
+  {title:'商品',icon:'icon-shopping',path:'/1'},
+ /* {title:'消息',icon:'icon-message',path:'/2',badge:3},*/
+  {title:'我的',icon:'icon-person2',path:'/user'}
+  ]
+  to(path){
+    let {location:{pathname},history:{push}}=this.props;
+    this.setState({active: path});
+    push(path);
   }
-  &.red.active svg{
-    color:#bd081c;
-  }
-  >div{
-    padding:12px;
-    :active{
-      background-color:rgb(239,239,239);
-      border-radius:50%;
-    }
-  }
-`
-class IconColumn extends Component{
   componentWillMount(){
-    let {location:{pathname},to,label,icon,index,active,onActive,selfName}=this.props;
-    if(active===null){
-      if(selfName && pathname.startsWith(`/${selfName}`)){//用户处理
-        onActive(index)
-      }else if(pathname.startsWith(to)){
-        onActive(index)
+    let {location:{pathname}}=this.props;
+    let selfName=null;
+    let path;
+    for(var [key,value] of Object.entries(this.data)){
+      let item=value;
+      if(this.state.active===null){
+        if(selfName && pathname.startsWith(`/${selfName}`)){//用户处理
+          path=item.path
+        }else if(pathname.startsWith(item.path)){
+          path=item.path
+        }
       }
     }
+    if(path)this.setState({active: path});
+  }
+  renderItem({title,icon,path,badge=0}){
+    let {location,show}=this.props;
+    let {pathname}=location;
+    let active=this.state.active;
+    return <TabBar.Item
+              location={location}
+              title={title}
+              key={path}
+              icon={
+                <div 
+                className={classNames("icon",icon)} 
+                style={{fontSize:22,width: '22px',height: '22px'}}
+                />
+              }
+              selectedIcon={
+                <div 
+                className={classNames("icon",icon)} 
+                style={{fontSize:22,width: '22px',height: '22px'}}
+                />
+              }
+              selected={this.state.active==path}
+              badge={badge}
+              onPress={() => {
+                this.to(path)
+              }}
+              data-seed="logId"
+            />
   }
   render(){
-    let {to,label,icon,index,active,onActive,className,replace=true}=this.props;
-
-    return(
-      <Column span={3}>
-        <IconLink replace={replace} to={to} className={ClassNames(index==0 && 'red',active==index && 'active')}  onClick={()=>onActive(index)} >
-          <div>
-            <Icon  accessibilityLabel={label} icon={icon} size="24"/>
-          </div>
-        </IconLink>
-      </Column>
+    let active=this.state.active;
+    let {location,show,theme}=this.props;
+    return  (
+      <div style={{height:49}}>
+        <FooterBox>
+          <TabBar
+            unselectedTintColor={theme["color-text-caption"]}
+            tintColor={theme["brand-primary"]}
+            barTintColor="#000"
+            hidden={false}
+          >
+            {this.data.map(item=>this.renderItem(item)) }
+          </TabBar>
+        </FooterBox>
+      </div>
       )
   }
 }
-const mapStateToProps=(state)=>({
-  selfUser:state.config.selfUser
-})
-const mapDispatchToProps=(dispatch)=>bindActionCreators({
-
-},dispatch)
-@withRouter
-@connect(mapStateToProps,mapDispatchToProps)
-class Footer extends Component{
-  state={active:null}
-  render(){
-    let active=this.state.active;
-    let {location,show,selfUser}=this.props;
-    if(!show)return false;
-    let name=selfUser && selfUser.name;
-    return(
-
-    <div style={{height:54}}>
-      <Foot>
-        <Box paddingX={1}  
-        justifyContent="center"
-        alignItems="start" display="flex" direction="row">
-            <Box maxWidth="500px" display="flex" width="100%"  direction="row">
-              <IconColumn
-                location={location}
-                to="/"
-                index={0}
-                label="发现"
-                icon="compass"
-                active={active}
-                onActive={(index)=>this.setState({active:index})}/>
-              <IconColumn
-                location={location}
-                to="/find"
-                index={1}
-                label="搜索"
-                icon="search"
-                active={active}
-                onActive={(index)=>this.setState({active:index})}/>
-              <IconColumn
-                location={location}
-                to="/notice"
-                index={2}
-                label="消息"
-                icon="speech-ellipsis"
-                active={active}
-                onActive={(index)=>this.setState({active:index})}/>
-              <IconColumn
-                location={location}
-                to={name?`/${name}`:"/login/"}
-                replace={!!name}
-                selfName={name}
-                index={3}
-                label="我"
-                icon="person"
-                active={active}
-                onActive={(index)=>this.setState({active:index})}/>
-            </Box>
-        </Box>
-      </Foot>
-    </div>
-    )
-  }
-}
-
-
 export default Footer
