@@ -5,6 +5,7 @@ import { WingBlank ,Flex} from 'antd-mobile';
 import Zoom from 'react-reveal/Zoom';
 import Fade from 'react-reveal/Fade';
 import {UpperStrata,Important,Small} from './Column';
+import ImageContainer from 'com_/ImageContainer';
 const Container=styled.div`
  padding:30px 10px;
 `
@@ -27,6 +28,7 @@ class Column extends React.Component{
     return (
       <WingBlank size="md">
         <Flex>
+
           <Flex.Item>
             <UpperStrata>
               <Fade bottom delay={1000}>
@@ -37,11 +39,13 @@ class Column extends React.Component{
               </Fade>
             </UpperStrata>
           </Flex.Item>
+
           <Flex.Item flex={0}>
             <Zoom delay={500}>
-              <ItemImage height={imageHeight} src={img}/>
+              <ImageContainer  src={img} height={imageHeight} component={ItemImage}/>
             </Zoom>
           </Flex.Item>
+          
         </Flex>
      </WingBlank>
     );

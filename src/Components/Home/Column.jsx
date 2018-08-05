@@ -6,7 +6,7 @@ import Flip from 'react-reveal/Flip';
 import Zoom from 'react-reveal/Zoom';
 import Pulse from 'react-reveal/Pulse';
 import Fade from 'react-reveal/Fade';
-
+import ImageContainer from 'com_/ImageContainer';
 const Container=styled.div`
  padding:30px 10px;
 `
@@ -22,7 +22,7 @@ const RightContent=styled.div`
 `
 
 const ItemImage=styled.img`
-  max-width:100%;
+  width:100%;
   z-index:0;
 `
 export const Small=styled.small`
@@ -43,15 +43,18 @@ class Column extends React.Component{
     let {img,imageHeight}= this.props
     return (
       <WingBlank size="md">
+      
         <Fade delay={500} bottom>
-          <ItemImage src={img} height={imageHeight}/>
+          <ImageContainer  src={img} height={imageHeight}/>
         </Fade>
+
         <Zoom right delay={500}>
           <RightContent>
             <Small>Women Hairstyles</Small>
             <Important>Hairstyles for Oval Faces: Find the Right...</Important>
           </RightContent>
         </Zoom>
+
      </WingBlank>
     );
   }

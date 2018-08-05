@@ -7,7 +7,7 @@ class Banner extends Component{
   render(){
     let {location}=this.props;
     return  (
-      <div style={{height:220}}>
+      <div style={{minHeight:220}}>
         <Carousel
           autoplay={true}
           infinite
