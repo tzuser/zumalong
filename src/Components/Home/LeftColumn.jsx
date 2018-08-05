@@ -2,6 +2,9 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import { WingBlank ,Flex} from 'antd-mobile';
+import Zoom from 'react-reveal/Zoom';
+import Fade from 'react-reveal/Fade';
+import {UpperStrata,Important,Small} from './Column';
 const Container=styled.div`
  padding:30px 10px;
 `
@@ -10,21 +13,12 @@ const RightContent=styled.div`
  padding:10px 10px;
  background:#222;
  margin-top:10px;
- z-index:2;
- position: relative;
 `
 
 const ItemImage=styled.img`
   width:115%;
   margin-right:-15%;
   z-index:0;
-`
-const Small=styled.small`
-  color:#999;
-`
-
-const Important=styled.div`
-  font-size:16px;
 `
 @withRouter
 class Column extends React.Component{ 
@@ -34,13 +28,19 @@ class Column extends React.Component{
       <WingBlank size="md">
         <Flex>
           <Flex.Item flex={0}>
-            <ItemImage height={imageHeight} src={img}/>
+            <Zoom delay={500}>
+              <ItemImage height={imageHeight} src={img}/>
+            </Zoom>
           </Flex.Item>
           <Flex.Item>
-            <RightContent>
-              <Small>Women Hairstyles</Small>
-              <Important>Hairstyles for Oval Faces: Find the Right...</Important>
-            </RightContent>
+            <UpperStrata>
+              <Fade bottom delay={1000}>
+                <RightContent>
+                  <Small>Women Hairstyles</Small>
+                  <Important>Hairstyles for Oval Faces: Find the Right...</Important>
+                </RightContent>
+              </Fade>
+            </UpperStrata>
           </Flex.Item>
         </Flex>
      </WingBlank>

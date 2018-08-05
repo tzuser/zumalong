@@ -2,6 +2,11 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import { WingBlank } from 'antd-mobile';
+import Flip from 'react-reveal/Flip';
+import Zoom from 'react-reveal/Zoom';
+import Pulse from 'react-reveal/Pulse';
+import Fade from 'react-reveal/Fade';
+
 const Container=styled.div`
  padding:30px 10px;
 `
@@ -20,12 +25,17 @@ const ItemImage=styled.img`
   max-width:100%;
   z-index:0;
 `
-const Small=styled.small`
+export const Small=styled.small`
   color:#999;
 `
 
-const Important=styled.div`
+export const Important=styled.div`
   font-size:16px;
+`
+
+export const UpperStrata=styled.div`
+ z-index:2;
+ position: relative;
 `
 @withRouter
 class Column extends React.Component{ 
@@ -33,11 +43,15 @@ class Column extends React.Component{
     let {img,imageHeight}= this.props
     return (
       <WingBlank size="md">
-        <ItemImage src={img} height={imageHeight}/>
-        <RightContent>
-          <Small>Women Hairstyles</Small>
-          <Important>Hairstyles for Oval Faces: Find the Right...</Important>
-        </RightContent>
+        <Fade delay={500} bottom>
+          <ItemImage src={img} height={imageHeight}/>
+        </Fade>
+        <Zoom right delay={500}>
+          <RightContent>
+            <Small>Women Hairstyles</Small>
+            <Important>Hairstyles for Oval Faces: Find the Right...</Important>
+          </RightContent>
+        </Zoom>
      </WingBlank>
     );
   }

@@ -78,7 +78,7 @@ const theme={
     "v-spacing-sm":`${6 * hd}px`,
     "v-spacing-md":`${9 * hd}px`,
     "v-spacing-lg":`${15 * hd}px`,
-    "v-spacing-xl":`${21 * hd}px`,
+    "v-spacing-xl":`${42 * hd}px`,
 
     // 高度
     // ---

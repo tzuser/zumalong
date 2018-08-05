@@ -9,7 +9,11 @@ import {bindActionCreators} from 'redux';
 import {filteringJitter} from 'tools_';
 import Footer from '@/Components/Footer';
 import styled,{ThemeProvider} from 'styled-components';
-import theme from '../public/theme'
+import theme from '../public/theme';
+//动画
+import revealConfig from 'react-reveal/globals';
+revealConfig({ ssrFadeout: true });
+
 //去抖动
 const instanceFillteringJitter=filteringJitter();
 
